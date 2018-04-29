@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+
+
+    <FrameLayout
+        android:id="@+id/frameLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="username"
+                android:inputType="textPersonName"
+                android:text="" />
+
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="password"
+                android:inputType="textPassword" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/Login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="iniciar"
+                    android:layout_weight="1"
+                    android:text="Iniciar sesion" />
+
+                <Button
+                    android:id="@+id/registrarse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:onClick="regist"
+                    android:text="Registrar" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
