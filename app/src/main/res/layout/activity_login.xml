@@ -7,7 +7,6 @@
     tools:context=".Login">
 
 
-
     <FrameLayout
         android:id="@+id/frameLogin"
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="username"
+                android:hint="Identificacion"
                 android:inputType="textPersonName"
                 android:text="" />
 
@@ -37,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="password"
+                android:hint="Contraseña"
                 android:inputType="textPassword" />
 
             <LinearLayout
@@ -50,8 +49,8 @@
                     android:id="@+id/Login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="iniciar"
                     android:layout_weight="1"
+                    android:onClick="iniciar"
                     android:text="Iniciar sesion" />
 
                 <Button
