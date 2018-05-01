@@ -49,7 +49,8 @@ public class Registrarse extends Fragment {
     private Conexion conexion;
     private SQLiteDatabase bd;
     private View indexView;
-    private EditText name,mail,pass,type;
+    private EditText cedula,name,mail,pass;
+    private Spinner spinner;
     private Button reg;
 
     public Registrarse() {
@@ -80,6 +81,7 @@ public class Registrarse extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
 
         //****************************
@@ -93,53 +95,57 @@ public class Registrarse extends Fragment {
         // Inflate the layout for this fragment
         indexView = inflater.inflate(R.layout.fragment_registrarse, container, false);
         //Toma de elementos para interaccion
+        cedula = (EditText) indexView.findViewById(R.id.Identificacion);
         name = (EditText) indexView.findViewById(R.id.name);
         mail = (EditText) indexView.findViewById(R.id.email);
         pass = (EditText) indexView.findViewById(R.id.password);
+        spinner = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
+
 
         reg= (Button)indexView.findViewById(R.id.registrar);
-        Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.tipo_usuario, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        tipoUsuario.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         reg.setOnClickListener(new View.OnClickListener() {
-                //d41d8cd98f00b204e9800998ecf8427e
-                @Override
-                public void onClick(View v) {
-                    if(name.getText().toString().trim().equals("")||
-                            mail.getText().toString().trim().equals("")||
-                            pass.getText().toString().trim().equals(""))
-                    {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Todos los campos son obligatorios.")
-                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+            //d41d8cd98f00b204e9800998ecf8427e
+            @Override
+            public void onClick(View v) {
+                if(cedula.getText().toString().trim().equals("")||
+                        name.getText().toString().trim().equals("")||
+                        mail.getText().toString().trim().equals("")||
+                        pass.getText().toString().trim().equals(""))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Todos los campos son obligatorios.")
+                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                                    }
-                                });
+                                }
+                            });
 
-                        // Create the AlertDialog object and return it
-                        builder.create();
-                        builder.show();
-                    }
-                    else{
-                        String query="insert into usuarios (name,password,tipo) values ('"+name.getText().toString().trim()+"','"+
-                                MD5.getMD5(pass.getText().toString().trim())+"','"+
-                                type.getText().toString().trim()+"');";
+                    // Create the AlertDialog object and return it
+                    builder.create();
+                    builder.show();
+                }
+                else {
+                    try {
+                        String query = "insert into usuarios (cedula,name,email,password,tipo) values ('" + cedula.getText().toString().trim() + "','" +
+                                name.getText().toString().trim() + "','" +
+                                mail.getText().toString().trim() + "','" +
+                                MD5.getMD5(pass.getText().toString().trim()) + "','" +
+                                spinner.getSelectedItem().toString().trim() + "');";
                         bd.execSQL(query);
-                        Toast.makeText(getContext(),MD5.getMD5(pass.getText().toString().trim()),Toast.LENGTH_SHORT).show();
-                        System.out.println(MD5.getMD5(pass.getText().toString().trim()));
 
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 // Add the buttons
                         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent ir = new Intent(getActivity(),Login.class);
+                                Intent ir = new Intent(getActivity(), Login.class);
                                 ir.addFlags(ir.FLAG_ACTIVITY_CLEAR_TOP | ir.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(ir);
 
@@ -153,9 +159,22 @@ public class Registrarse extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.setMessage("Usuario registrado satisfactoriamente :)");
                         dialog.show();
+                    }catch (Exception e) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        AlertDialog dialog = builder.create();
+                        dialog.setMessage("Ya existe un usuario con esta cedula");
+                        dialog.show();
+                        cedula.setText("");
+                        mail.setText("");
+                        pass.setText("");
+                        name.setText("");
+
                     }
                 }
-            });
+
+
+            }
+        });
 
 
         return indexView;

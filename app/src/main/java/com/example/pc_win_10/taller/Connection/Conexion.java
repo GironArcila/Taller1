@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Conexion extends SQLiteOpenHelper {
 
 
-    String query="create table usuarios " + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,password TEXT ,tipo TEXT);";
+    String query="create table usuarios " + "(cedula TEXT PRIMARY KEY,name TEXT,email TEXT, password TEXT ,tipo TEXT);";
+    String query2="create table estudiantes " + "(cedula TEXT PRIMARY KEY,name TEXT,email TEXT);";
 
     public Conexion(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -16,6 +17,7 @@ public class Conexion extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(query);
+        db.execSQL(query2);
     }
 
     @Override
