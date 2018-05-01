@@ -24,6 +24,7 @@ public class StudentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students);
         Toast.makeText(this,"Bienvenido",Toast.LENGTH_SHORT);
+        //consultarEstudiantes();
     }
 
     public void consultarEstudiantes()
@@ -40,7 +41,7 @@ public class StudentsActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                estudiantes );
+                estudiantes);
 
         listaEstudiantes.setAdapter(arrayAdapter);
     }
