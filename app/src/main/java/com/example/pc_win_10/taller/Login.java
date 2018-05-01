@@ -28,37 +28,57 @@ public class Login extends AppCompatActivity implements Registrarse.OnFragmentIn
             setContentView(R.layout.activity_login);
             username = (EditText)findViewById(R.id.username);
             password = (EditText)findViewById(R.id.password);
-            conexion=   new Conexion(this,"Usuario",null,1);
+            conexion =   new Conexion(this,"Usuario",null,1);
 
 
         }
 
         public void iniciar(View h){
-            SQLiteDatabase db = conexion.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT name,password FROM usuarios WHERE name='"+username.getText().toString().trim()
-                    +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';",null);
-            System.out.println("SELECT name,password FROM usuarios WHERE name='"+username.getText().toString().trim()
-                    +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';");
-            if(c.moveToFirst()){
-                Toast.makeText(this,"pasar activity",Toast.LENGTH_SHORT).show();
-            }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-// Add the buttons
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+            if(username.getText().toString().trim().equals("")||
+                    password.getText().toString().trim().equals(""))
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Hay campos vacios")
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
+                            }
+                        });
 
-                        // User clicked OK button
-                    }
-
-
-                });
-
-
-                AlertDialog dialog = builder.create();
-                dialog.setMessage("Usuario NO registrado :(");
-                dialog.show();
+                // Create the AlertDialog object and return it
+                builder.create();
+                builder.show();
             }
+            else {
+                SQLiteDatabase db = conexion.getReadableDatabase();
+                Cursor c = db.rawQuery("SELECT name,password FROM usuarios WHERE name='"+username.getText().toString().trim()
+                        +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';",null);
+                System.out.println("SELECT name,password FROM usuarios WHERE name='"+username.getText().toString().trim()
+                        +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';");
+                if(c.moveToFirst()){
+                    username.setText("");
+                    password.setText("");
+                    Intent goToStudents = new Intent(this,StudentsActivity.class);
+                    goToStudents.addFlags(goToStudents.FLAG_ACTIVITY_CLEAR_TOP | goToStudents.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(goToStudents);
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+// Add the buttons
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+
+                            // User clicked OK button
+                        }
+
+
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.setMessage("El usuario no existe");
+                    dialog.show();
+                }
+            }
+
 
         }
 

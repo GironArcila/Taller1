@@ -14,12 +14,21 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/Identificacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Identificacion"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:hint="username"
+            android:hint="Nombre de usuario"
             android:inputType="textPersonName" />
 
         <EditText
@@ -28,7 +37,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:hint="email "
+            android:hint="E-mail "
             android:inputType="textPersonName" />
 
         <EditText
@@ -37,17 +46,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:hint="password"
+            android:hint="Contraseña"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/tipo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="tipo"
-            android:inputType="textPersonName" />
+        <Spinner
+            android:id="@+id/tipo_Usuario"
+            android:layout_width="210dp"
+            android:layout_height="36dp" />
 
         <Button
             android:id="@+id/registrar"
