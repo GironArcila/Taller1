@@ -105,10 +105,7 @@ public class Registrarse extends Fragment {
 
 
         reg= (Button)indexView.findViewById(R.id.registrar);
-<<<<<<< HEAD
-=======
         //Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
->>>>>>> 738583f6a02725305a27da5f2ad9114ba21217d5
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.tipo_usuario, android.R.layout.simple_spinner_item);
@@ -117,7 +114,6 @@ public class Registrarse extends Fragment {
         spinner.setAdapter(adapter);
 
         reg.setOnClickListener(new View.OnClickListener() {
-                //d41d8cd98f00b204e9800998ecf8427e
                 @Override
                 public void onClick(View v) {
                     if(cedula.getText().toString().trim().equals("")||
@@ -137,7 +133,6 @@ public class Registrarse extends Fragment {
                         builder.create();
                         builder.show();
                     }
-<<<<<<< HEAD
                     else {
                         try {
                             String query = "insert into usuarios (cedula,name,email,password,tipo) values ('" + cedula.getText().toString().trim() + "','" +
@@ -146,35 +141,6 @@ public class Registrarse extends Fragment {
                                     MD5.getMD5(pass.getText().toString().trim()) + "','" +
                                     spinner.getSelectedItem().toString().trim() + "');";
                             bd.execSQL(query);
-=======
-                    else{
-                        String query="insert into usuarios (cedula,name,email,password,tipo) values ('"+cedula.getText().toString().trim()+"','"+
-                                name.getText().toString().trim()+"','"+
-                                mail.getText().toString().trim()+"','"+
-                                MD5.getMD5(pass.getText().toString().trim())+"','"+
-                                spinner.getSelectedItem().toString().trim()+"');";
-                        bd.execSQL(query);
->>>>>>> 7385
-
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-// Add the buttons
-                            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    Intent ir = new Intent(getActivity(), Login.class);
-                                    ir.addFlags(ir.FLAG_ACTIVITY_CLEAR_TOP | ir.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(ir);
-
-                                    // User clicked OK button
-                                }
-
-
-                            });
-
-
-                            AlertDialog dialog = builder.create();
-                            dialog.setMessage("Usuario registrado satisfactoriamente :)");
-                            dialog.show();
                         } catch (Exception e) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             AlertDialog dialog = builder.create();

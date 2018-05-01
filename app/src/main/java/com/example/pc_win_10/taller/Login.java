@@ -33,10 +33,9 @@ public class Login extends AppCompatActivity implements Registrarse.OnFragmentIn
 
         }
 
-        public void iniciar(View h){
-            if(username.getText().toString().trim().equals("")||
-                    password.getText().toString().trim().equals(""))
-            {
+        public void iniciar(View h) {
+            if (username.getText().toString().trim().equals("") ||
+                    password.getText().toString().trim().equals("")) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Hay campos vacios")
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -48,40 +47,31 @@ public class Login extends AppCompatActivity implements Registrarse.OnFragmentIn
                 // Create the AlertDialog object and return it
                 builder.create();
                 builder.show();
-            }
-            else {
+            } else {
                 SQLiteDatabase db = conexion.getReadableDatabase();
-                Cursor c = db.rawQuery("SELECT cedula,password FROM usuarios WHERE cedula='"+username.getText().toString().trim()
-                        +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';",null);
-<<<<<<< HEAD
-                 if(c.moveToFirst()){
-=======
-                if(c.moveToFirst()){
->>>>>>> 738583f6a02725305a27da5f2ad9114ba21217d5
-                    username.setText("");
-                    password.setText("");
-                    Intent goToStudents = new Intent(this,StudentsActivity.class);
-                    goToStudents.addFlags(goToStudents.FLAG_ACTIVITY_CLEAR_TOP | goToStudents.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(goToStudents);
-                }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-// Add the buttons
-                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+                Cursor c = db.rawQuery("SELECT cedula,password FROM usuarios WHERE cedula='" + username.getText().toString().trim()
+                        + "' AND password='" + MD5.getMD5(password.getText().toString().trim()) + "';", null);
+                if (c.moveToFirst()) {
+                    if (c.moveToFirst()) {
+                        username.setText("");
+                        password.setText("");
+                        Intent goToStudents = new Intent(this, StudentsActivity.class);
+                        goToStudents.addFlags(goToStudents.FLAG_ACTIVITY_CLEAR_TOP | goToStudents.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(goToStudents);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-
-                            // User clicked OK button
-                        }
-
-
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.setMessage("El usuario no existe");
-                    dialog.show();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.setMessage("El usuario no existe");
+                        dialog.show();
+                    }
                 }
+
             }
-
-
         }
 
         public void regist(View g){
