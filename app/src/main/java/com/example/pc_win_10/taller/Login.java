@@ -53,7 +53,11 @@ public class Login extends AppCompatActivity implements Registrarse.OnFragmentIn
                 SQLiteDatabase db = conexion.getReadableDatabase();
                 Cursor c = db.rawQuery("SELECT cedula,password FROM usuarios WHERE cedula='"+username.getText().toString().trim()
                         +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';",null);
+<<<<<<< HEAD
                  if(c.moveToFirst()){
+=======
+                if(c.moveToFirst()){
+>>>>>>> 738583f6a02725305a27da5f2ad9114ba21217d5
                     username.setText("");
                     password.setText("");
                     Intent goToStudents = new Intent(this,StudentsActivity.class);
