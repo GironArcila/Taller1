@@ -86,6 +86,8 @@ public class Registrarse extends Fragment {
 
         //****************************
         conexion=new Conexion(getContext(),"Usuario",null,1);
+
+
         bd = conexion.getWritableDatabase();
     }
 
@@ -103,13 +105,12 @@ public class Registrarse extends Fragment {
 
 
         reg= (Button)indexView.findViewById(R.id.registrar);
-        final Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.tipo_usuario, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        tipoUsuario.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         reg.setOnClickListener(new View.OnClickListener() {
                 //d41d8cd98f00b204e9800998ecf8427e
@@ -132,36 +133,48 @@ public class Registrarse extends Fragment {
                         builder.create();
                         builder.show();
                     }
-                    else{
-                        String query="insert into usuarios (cedula,name,email,password,tipo) values ('"+cedula.getText().toString().trim()+"','"+
-                                name.getText().toString().trim()+"','"+
-                                mail.getText().toString().trim()+"','"+
-                                MD5.getMD5(pass.getText().toString().trim())+"','"+
-                                tipoUsuario.getSelectedItem().toString().trim()+"');";
-                        bd.execSQL(query);
-                        Toast.makeText(getContext(),MD5.getMD5(tipoUsuario.getSelectedItem().toString().trim()),Toast.LENGTH_SHORT).show();
+                    else {
+                        try {
+                            String query = "insert into usuarios (cedula,name,email,password,tipo) values ('" + cedula.getText().toString().trim() + "','" +
+                                    name.getText().toString().trim() + "','" +
+                                    mail.getText().toString().trim() + "','" +
+                                    MD5.getMD5(pass.getText().toString().trim()) + "','" +
+                                    spinner.getSelectedItem().toString().trim() + "');";
+                            bd.execSQL(query);
 
 
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 // Add the buttons
-                        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent ir = new Intent(getActivity(),Login.class);
-                                ir.addFlags(ir.FLAG_ACTIVITY_CLEAR_TOP | ir.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(ir);
+                            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent ir = new Intent(getActivity(), Login.class);
+                                    ir.addFlags(ir.FLAG_ACTIVITY_CLEAR_TOP | ir.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(ir);
 
-                                // User clicked OK button
-                            }
-
-
-                        });
+                                    // User clicked OK button
+                                }
 
 
-                        AlertDialog dialog = builder.create();
-                        dialog.setMessage("Usuario registrado satisfactoriamente :)");
-                        dialog.show();
+                            });
+
+
+                            AlertDialog dialog = builder.create();
+                            dialog.setMessage("Usuario registrado satisfactoriamente :)");
+                            dialog.show();
+                        } catch (Exception e) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            AlertDialog dialog = builder.create();
+                            dialog.setMessage("Ya existe un usuario con esta cedula");
+                            dialog.show();
+                            cedula.setText("");
+                            mail.setText("");
+                            pass.setText("");
+                            name.setText("");
+
+                        }
                     }
+
+
                 }
             });
 
