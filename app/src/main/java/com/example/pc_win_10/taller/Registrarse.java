@@ -103,13 +103,13 @@ public class Registrarse extends Fragment {
 
 
         reg= (Button)indexView.findViewById(R.id.registrar);
-        final Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
+        //Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.tipo_usuario, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        tipoUsuario.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         reg.setOnClickListener(new View.OnClickListener() {
                 //d41d8cd98f00b204e9800998ecf8427e
@@ -137,9 +137,8 @@ public class Registrarse extends Fragment {
                                 name.getText().toString().trim()+"','"+
                                 mail.getText().toString().trim()+"','"+
                                 MD5.getMD5(pass.getText().toString().trim())+"','"+
-                                tipoUsuario.getSelectedItem().toString().trim()+"');";
+                                spinner.getSelectedItem().toString().trim()+"');";
                         bd.execSQL(query);
-                        Toast.makeText(getContext(),MD5.getMD5(tipoUsuario.getSelectedItem().toString().trim()),Toast.LENGTH_SHORT).show();
 
 
 
