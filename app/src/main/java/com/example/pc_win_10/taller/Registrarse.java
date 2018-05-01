@@ -49,7 +49,8 @@ public class Registrarse extends Fragment {
     private Conexion conexion;
     private SQLiteDatabase bd;
     private View indexView;
-    private EditText name,mail,pass,type;
+    private EditText cedula,name,mail,pass;
+    private Spinner spinner;
     private Button reg;
 
     public Registrarse() {
@@ -80,6 +81,7 @@ public class Registrarse extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
 
         //****************************
@@ -93,12 +95,15 @@ public class Registrarse extends Fragment {
         // Inflate the layout for this fragment
         indexView = inflater.inflate(R.layout.fragment_registrarse, container, false);
         //Toma de elementos para interaccion
+        cedula = (EditText) indexView.findViewById(R.id.Identificacion);
         name = (EditText) indexView.findViewById(R.id.name);
         mail = (EditText) indexView.findViewById(R.id.email);
         pass = (EditText) indexView.findViewById(R.id.password);
+        spinner = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
+
 
         reg= (Button)indexView.findViewById(R.id.registrar);
-        Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
+        final Spinner tipoUsuario = (Spinner) indexView.findViewById(R.id.tipo_Usuario);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.tipo_usuario, android.R.layout.simple_spinner_item);
@@ -110,7 +115,8 @@ public class Registrarse extends Fragment {
                 //d41d8cd98f00b204e9800998ecf8427e
                 @Override
                 public void onClick(View v) {
-                    if(name.getText().toString().trim().equals("")||
+                    if(cedula.getText().toString().trim().equals("")||
+                            name.getText().toString().trim().equals("")||
                             mail.getText().toString().trim().equals("")||
                             pass.getText().toString().trim().equals(""))
                     {
@@ -127,12 +133,14 @@ public class Registrarse extends Fragment {
                         builder.show();
                     }
                     else{
-                        String query="insert into usuarios (name,password,tipo) values ('"+name.getText().toString().trim()+"','"+
+                        String query="insert into usuarios (cedula,name,email,password,tipo) values ('"+cedula.getText().toString().trim()+"','"+
+                                name.getText().toString().trim()+"','"+
+                                mail.getText().toString().trim()+"','"+
                                 MD5.getMD5(pass.getText().toString().trim())+"','"+
-                                type.getText().toString().trim()+"');";
+                                tipoUsuario.getSelectedItem().toString().trim()+"');";
                         bd.execSQL(query);
-                        Toast.makeText(getContext(),MD5.getMD5(pass.getText().toString().trim()),Toast.LENGTH_SHORT).show();
-                        System.out.println(MD5.getMD5(pass.getText().toString().trim()));
+                        Toast.makeText(getContext(),MD5.getMD5(tipoUsuario.getSelectedItem().toString().trim()),Toast.LENGTH_SHORT).show();
+
 
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
