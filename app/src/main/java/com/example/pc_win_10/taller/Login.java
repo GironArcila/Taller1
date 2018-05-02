@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 import com.example.pc_win_10.taller.Connection.Conexion;
 
@@ -51,13 +51,14 @@ public class Login extends AppCompatActivity implements Registrarse.OnFragmentIn
         }
         else {
             SQLiteDatabase db = conexion.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT cedula,password FROM usuarios WHERE cedula='"+username.getText().toString().trim()
+            Cursor c = db.rawQuery("SELECT cedula,password,tipo FROM usuarios WHERE cedula='"+username.getText().toString().trim()
                     +"' AND password='"+MD5.getMD5(password.getText().toString().trim())+"';",null);
             if(c.moveToFirst()){
                 username.setText("");
                 password.setText("");
                 Intent goToStudents = new Intent(this,StudentsActivity.class);
                 goToStudents.addFlags(goToStudents.FLAG_ACTIVITY_CLEAR_TOP | goToStudents.FLAG_ACTIVITY_CLEAR_TASK);
+                goToStudents.putExtra("Permission",c.getString(2));
                 startActivity(goToStudents);
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
