@@ -111,7 +111,6 @@ public class Registrarse extends Fragment {
         spinner.setAdapter(adapter);
 
         reg.setOnClickListener(new View.OnClickListener() {
-            //d41d8cd98f00b204e9800998ecf8427e
             @Override
             public void onClick(View v) {
                 if(cedula.getText().toString().trim().equals("")||
