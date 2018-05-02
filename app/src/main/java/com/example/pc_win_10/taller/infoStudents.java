@@ -1,12 +1,20 @@
 package com.example.pc_win_10.taller;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.pc_win_10.taller.Connection.Conexion;
 
 
 /**
@@ -29,6 +37,10 @@ public class infoStudents extends Fragment {
     private View indexView;
 
     private OnFragmentInteractionListener mListener;
+    private Conexion conexion;
+    private SQLiteDatabase db;
+    private EditText codigo,nombre,email;
+    private Button registrar;
 
     public infoStudents() {
         // Required empty public constructor
@@ -59,6 +71,8 @@ public class infoStudents extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        conexion=new Conexion(getContext(),"Usuario",null,1);
+         db= conexion.getWritableDatabase();
     }
 
     @Override
@@ -66,7 +80,77 @@ public class infoStudents extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         indexView = inflater.inflate(R.layout.fragment_info_students, container, false);
+
+        codigo = (EditText)indexView.findViewById(R.id.Codigo);
+        nombre = (EditText)indexView.findViewById(R.id.Nombre);
+        email = (EditText)indexView.findViewById(R.id.Email);
+        registrar = (Button)indexView.findViewById(R.id.RegistrarStudent);
+
+        registrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(codigo.getText().toString().trim().equals("")||
+                        nombre.getText().toString().trim().equals("")||
+                        email.getText().toString().trim().equals(""))
+                                        {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Todos los campos son obligatorios.")
+                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                }
+                            });
+
+                    // Create the AlertDialog object and return it
+                    builder.create();
+                    builder.show();
+                }else{
+
+
+                    try {
+                        String query = "insert into estudiantes (cedula,name,email) values ('" + codigo.getText().toString().trim() + "','" +
+                                nombre.getText().toString().trim() + "','" +
+                                email.getText().toString().trim() + "','";
+
+                        db.execSQL(query);
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+// Add the buttons
+                        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+
+                                // User clicked OK button
+                            }
+
+
+                        });
+
+
+                        AlertDialog dialog = builder.create();
+                        dialog.setMessage("Estudiante registrado satisfactoriamente :)");
+                        dialog.show();
+                    } catch (Exception e) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        AlertDialog dialog = builder.create();
+                        dialog.setMessage("Ya existe un estudiante con este codigo");
+                        dialog.show();
+                        codigo.setText("");
+                        email.setText("");
+                        nombre.setText("");
+
+
+                    }
+                }
+
+
+            }
+        });
+
+
         return indexView;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

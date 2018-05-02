@@ -5,38 +5,52 @@
     tools:context="com.example.pc_win_10.taller.infoStudents">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Informacion de estudiante." />
+            android:ems="60"
+            android:text="Registro de un nuevo estudiante."
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
 
-        <TextView
-            android:id="@+id/nombre"
+        <EditText
+            android:id="@+id/Codigo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:gravity="center"
-            android:text="Nombre." />
+            android:hint="Codigo"
+            android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/id"
+        <EditText
+            android:id="@+id/Nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:gravity="center"
-            android:text="Identificacion." />
+            android:hint="Nombre"
+            android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/email"
+        <EditText
+            android:id="@+id/Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:gravity="center"
-            android:text="E-mail." />
+            android:hint="E-mail"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/RegistrarStudent"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:text="Registrar" />
+
     </LinearLayout>
 
 </FrameLayout>
