@@ -2,10 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context="com.example.pc_win_10.taller.viewInfoStudentsFragment">
+    tools:context="com.example.pc_win_10.taller.infoStudents">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"
